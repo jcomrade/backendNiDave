@@ -43,7 +43,7 @@ module.exports.signup_post = async (req, res) => {
     const token = createToken(user._id, user.username);
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.cookie("jwt", token, { maxAge: maxAge * 1000 });
-    res.status(201).json({ user: user._id, user: user.username });
+    res.status(201).json({ user: user._id, username: user.username });
   } catch (err) {
     console.log(err);
     const errors = handleErrors(err);
@@ -64,6 +64,10 @@ module.exports.login_post = async (req, res) => {
     const errors = handleErrors(err);
     res.status(401).json({ errors });
   }
+};
+
+module.exports.verify_user = async (req, res) => {
+  res.status(200).json({message: "Permission granted"});
 };
 
 module.exports.signout = async (req,res) => {

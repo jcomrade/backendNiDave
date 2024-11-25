@@ -18,7 +18,7 @@ const createPlaylist = async (req, res) => {
     });
     res.status(200).json({ message: "playlist created" });
   } catch (error) {
-    res.status(400).json(error.message);
+    res.status(400).json(error);
   }
 };
 

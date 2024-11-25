@@ -11,7 +11,7 @@ const requireAuth = (req, res, next) => {
                 req.user = decodedToken
                 next();
             }else{
-                res.status(401).json({error: "Permission not granted"});
+                res.status(401).json({error: "Authentication Failure"});
             }
         })
     }else{

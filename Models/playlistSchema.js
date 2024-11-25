@@ -6,6 +6,7 @@ const playlistSchema = new Schema(
     playlist_name: {
       type: String,
       required: true,
+      minlength: [1, 'Minimum Playlist name length is 1 characters'],
     },
     songs: {
       type: Array,
