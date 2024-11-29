@@ -15,7 +15,8 @@ const requireAuth = (req, res, next) => {
             }
         })
     }else{
-        res.status(401).json({error: "2nd Type Authentication Failure", "res" : {...res}});
+        console.log({...req})
+        res.status(401).json({error: "2nd Type Authentication Failure"});
     }
 }
 
