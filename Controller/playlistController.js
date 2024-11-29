@@ -1,4 +1,5 @@
 const PLAYLIST = require("../Models/playlistSchema");
+const USER = require("../Models/authSchema")
 const getPlaylists = async (req, res) => {
   try {
     const userPlaylists = await PLAYLIST.find({ owner: req.user.id });
@@ -22,7 +23,19 @@ const createPlaylist = async (req, res) => {
   }
 };
 
+const getOnePlaylist = async (req, res) => {
+  const {playlistId} = req.params
+  try {
+    const playlist = await PLAYLIST.findById(playlistId);
+    const playlist_owner_details = await USER.findById(playlist.owner);
+    res.status(200).json({...playlist._doc, owner : playlist_owner_details.username});
+  } catch (error) {
+    res.status(400).json(error);
+  }
+}
+
 module.exports = {
   createPlaylist,
   getPlaylists,
+  getOnePlaylist
 };
