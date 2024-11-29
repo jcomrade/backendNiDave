@@ -11,12 +11,12 @@ const requireAuth = (req, res, next) => {
                 req.user = decodedToken
                 next();
             }else{
-                res.status(401).json({error: "1st Type Authentication Failure"});
+                res.status(401).json({error: "Authentication Failure"});
             }
         })
     }else{
         console.log({...req})
-        res.status(401).json({error: "2nd Type Authentication Failure"});
+        res.status(401).json({error: "Authentication Failure"});
     }
 }
 
