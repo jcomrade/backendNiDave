@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser')
 // middleware
 app.use(express.json())
 app.use(cookieParser())
+app.options('*', cors());
 app.use(cors({
   origin: process.env.FRONTEND_URL,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
