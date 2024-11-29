@@ -77,9 +77,14 @@ module.exports.login_post = async (req, res) => {
 };
 
 module.exports.verify_user = async (req, res) => {
-  res.status(200).json({ message: "Permission granted" });
+  res.status(200).json({ message: "Permission granted", user: req.user });
 };
 
-module.exports.signout = async (req, res) => {
-  res.clearCookie("jwt").status(200).send("Cookie Cleared");
+module.exports.signout = (req, res) => {
+  res.clearCookie("jwt", {
+    httpOnly: true, // Ensures the cookie is only accessible by the server
+    secure: true, // Ensures the cookie is only sent over HTTPS in production
+    sameSite: "none", // Allows cross-origin requests (needed if front-end and back-end have different origins)
+  });
+  res.status(200).send("Cookie Cleared");
 };
