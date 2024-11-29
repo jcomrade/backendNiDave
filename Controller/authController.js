@@ -44,7 +44,7 @@ module.exports.signup_post = async (req, res) => {
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.cookie("jwt", token, {
       maxAge: maxAge * 1000,
-      httpOnly: false,
+      httpOnly: true,
       secure: true,
       sameSite: "None",
     });
@@ -65,7 +65,7 @@ module.exports.login_post = async (req, res) => {
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.cookie("jwt", token, {
       maxAge: maxAge * 1000,
-      httpOnly: false,
+      httpOnly: true,
       secure: true,
       sameSite: "None",
     });
@@ -82,7 +82,7 @@ module.exports.verify_user = async (req, res) => {
 
 module.exports.signout = (req, res) => {
   res.clearCookie("jwt", {
-    httpOnly: false, // Ensures the cookie is only accessible by the server
+    httpOnly: true, // Ensures the cookie is only accessible by the server
     secure: true, // Ensures the cookie is only sent over HTTPS in production
     sameSite: "none", // Allows cross-origin requests (needed if front-end and back-end have different origins)
   });
