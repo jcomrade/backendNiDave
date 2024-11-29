@@ -1,5 +1,5 @@
 const AUTH = require("../Models/authSchema");
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 
 const handleErrors = (err) => {
   console.log(err.message, err.code);
@@ -42,7 +42,12 @@ module.exports.signup_post = async (req, res) => {
     console.log(user);
     const token = createToken(user._id, user.username);
     res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.cookie("jwt", token, { maxAge: maxAge * 1000 });
+    res.cookie("jwt", token, {
+      maxAge: maxAge * 1000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
     res.status(201).json({ user: user._id, username: user.username });
   } catch (err) {
     console.log(err);
@@ -58,7 +63,12 @@ module.exports.login_post = async (req, res) => {
     const user = await AUTH.login(username, password);
     const token = createToken(user._id, user.username);
     res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.cookie("jwt", token, { maxAge: maxAge * 1000 });
+    res.cookie("jwt", token, {
+      maxAge: maxAge * 1000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
     res.status(201).json({ user: user._id, username: user.username });
   } catch (err) {
     const errors = handleErrors(err);
@@ -67,9 +77,9 @@ module.exports.login_post = async (req, res) => {
 };
 
 module.exports.verify_user = async (req, res) => {
-  res.status(200).json({message: "Permission granted"});
+  res.status(200).json({ message: "Permission granted" });
 };
 
-module.exports.signout = async (req,res) => {
-  res.clearCookie('jwt').status(200).send('Cookie Cleared')
-}
+module.exports.signout = async (req, res) => {
+  res.clearCookie("jwt").status(200).send("Cookie Cleared");
+};
