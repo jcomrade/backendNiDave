@@ -10,17 +10,12 @@ const cookieParser = require('cookie-parser')
 // middleware
 app.use(express.json())
 app.use(cookieParser())
-app.options('*', cors());
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: "*",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   credentials: true,
 }))
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
-  res.header('Access-Control-Allow-Credentials', 'true');
-  next();
-});
+
 app.use('/api/playlist', playlistRoutes)
 app.use('/api/auth', authRoutes)
 // connect to db
