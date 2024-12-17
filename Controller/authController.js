@@ -77,7 +77,7 @@ module.exports.login_post = async (req, res) => {
 };
 
 module.exports.verify_user = async (req, res) => {
-  res.status(200).json({ message: "Permission granted"});
+  res.status(200).json({ message: "Permission granted", user: req.user.userName});
 };
 
 module.exports.signout = (req, res) => {
