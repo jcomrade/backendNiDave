@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import { Schema as _Schema, model } from "mongoose";
+const Schema = _Schema;
 
 const playlistSchema = new Schema(
   {
@@ -13,11 +13,11 @@ const playlistSchema = new Schema(
       required: true,
     },
     owner: {
-      type: String,
+      type: Map,
       required: true,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("playlist", playlistSchema);
+export default model("playlist", playlistSchema);

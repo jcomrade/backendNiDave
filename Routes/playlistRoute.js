@@ -1,17 +1,26 @@
-const {createPlaylist, getPlaylists, getOnePlaylist} = require("../Controller/playlistController")
+import { createPlaylist, getPlaylists, getOnePlaylist } from "../Controller/playlistController.js";
+import { Router } from 'express';
+import { auth } from 'express-oauth2-jwt-bearer';
+import { config as configDotenv } from "dotenv";
 
-const express = require('express')
-const { requireAuth } = require("../middleware/auth")
+configDotenv();
 
+const PlaylistRoute = Router();
 
-const router = express.Router()
+const jwtCheck = auth({
+    audience: process.env.AUDIENCE,
+    issuerBaseURL: process.env.ISSUER_BASE_URL,
+    tokenSigningAlg: 'RS256'
+  });
+
 
 // GET
-router.get("/", requireAuth ,getPlaylists )
-router.get("/:playlistId", getOnePlaylist)
+PlaylistRoute.get("/:playlistId", getOnePlaylist)
 
 // POST
-router.post("/", requireAuth ,createPlaylist )
+PlaylistRoute.post("/all", jwtCheck ,getPlaylists )
+
+PlaylistRoute.post("/", jwtCheck, createPlaylist )
 
 
-module.exports = router
+export default PlaylistRoute
