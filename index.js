@@ -18,7 +18,14 @@ app.use(
   })
 );
 
-app.use("/api/playlist", playlistRoutes);
+app.use(
+  "/api/playlist",
+  (req, res, next) => {
+    console.log(req.headers);
+    next();
+  },
+  playlistRoutes
+);
 
 // connect to db
 connect(process.env.MONGO_URI)
